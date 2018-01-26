@@ -1,0 +1,14 @@
+---
+
+- name: Install base packages
+  apt:
+    state: present
+    name: "{{ item }}"
+  with_items: "{{ apache2_base_packages }}"
+
+- name: Install optional packages
+  apt:
+    state: present
+    name: "{{ item }}"
+  with_items: "{{ apache2_optional_packages| default(omit) }}"
+  when: apache2_optional_packages is defined
