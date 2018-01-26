@@ -4,6 +4,7 @@
   template:
     src: "{{ apache2_main_config }}"
     dest: "{{ apache2_config_root }}/apache2.conf"
+  notify: Reload apache2
 
 - name: Remove default site
   file:
@@ -23,25 +24,12 @@
     mode: 0755
     path: "{{ apache2_conf_dir }}"
 
-- name: Configure vhosts
-  template:
-    src: "{{ item }}"
-    dest: "{{ apache2_vhosts_dir }}"
-  with_fileglob:
-    - "{{ apache2_local_config_dir }}/sites-enabled/*.conf"
-
-- name: Aditional configs
-  template:
-    src: "{{ item }}"
-    dest: "{{ apache2_vhosts_dir }}"
-  with_fileglob:
-    - "{{ apache2_local_config_dir }}/conf-enabled/*.conf"
-
 - name: Enable base modules
   apache2_module:
     name: "{{ item }}"
     state: present
   with_items: "{{ apache2_base_modules|default(omit) }}"
+  notify: Restart apache2
 
 - name: Enable optional modules
   apache2_module:
@@ -49,6 +37,23 @@
     state: present
   with_items: "{{ apache2_optional_modules|default(omit) }}"
   when: apache2_optional_modules is defined
+  notify: Restart apache2
+
+- name: Configure vhosts
+  template:
+    src: "{{ item }}"
+    dest: "{{ apache2_vhosts_dir }}"
+  with_fileglob:
+    - "{{ apache2_local_config_dir }}/sites-enabled/*.conf"
+  notify: Reload apache2
+
+- name: Aditional configs
+  template:
+    src: "{{ item }}"
+    dest: "{{ apache2_vhosts_dir }}"
+  with_fileglob:
+    - "{{ apache2_local_config_dir }}/conf-enabled/*.conf"
+  notify: Reload apache2
 
 - name: Allow HTTP
   ufw:
