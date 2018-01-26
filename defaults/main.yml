@@ -2,3 +2,5 @@ apache2_config_root: "/etc/apache2"
 apache2_main_config: "apache_main"
 apache2_vhosts_dir: "{{ apache2_config_root }}/sites-enabled"
 apache2_conf_dir: "{{ apache2_config_root }}/conf-enabled"
+apache2_http_port: 80
+apache2_https_port: 443

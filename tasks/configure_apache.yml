@@ -5,6 +5,12 @@
     src: "{{ apache2_main_config }}"
     dest: "{{ apache2_config_root }}/apache2.conf"
 
+- name: Remove default site
+  file:
+    state: absent
+    mode: 0755
+    path: "{{ apache2_vhosts_dir }}/000-default.conf"
+
 - name: Create sites directory
   file:
     state: directory
@@ -46,12 +52,12 @@
 
 - name: Allow HTTP
   ufw:
-    port: 80
+    port: "{{ apache2_http_port }}"
     proto: tcp
     rule: allow
 
 - name: Allow HTTPS
   ufw:
-    port: 443
+    port: "{{ apache2_https_port }}"
     proto: tcp
     rule: allow
