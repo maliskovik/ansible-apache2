@@ -1,5 +1,6 @@
 # Server config
 ServerRoot            "{{ apache2_config_root }}"
+ServerName            {{ apache2_server_name }}
 Mutex                 file:${APACHE_LOCK_DIR} default
 PidFile               ${APACHE_PID_FILE}
 User                  ${APACHE_RUN_USER}

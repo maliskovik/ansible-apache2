@@ -7,7 +7,7 @@ HTTP and HTTPS.
 * Ubuntu
 
 ## Optional configuration variables
-All variables under defaults are there to be overriden if needed.
+All variables under defaults are there to be overridden if needed.
 * apache2_config_root - location of config files on the destination
 * apache2_main_config - local apache2 config file to send to server.
 * apache2_vhosts_dir - sites-enabled directory on target

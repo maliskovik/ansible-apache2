@@ -1,5 +1,6 @@
 ---
 apache2_base_packages:
   - apache2
+
 apache2_base_modules:
   - ssl

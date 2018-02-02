@@ -5,14 +5,22 @@
     state: started
     enabled: yes
 
-- name: Restart apache2
+- name: Restart apache2 - after
   service:
     name: apache2
     state: restarted
     enabled: yes
 
-- name: Reload apache2
+- name: Reload apache2 - after check
   service:
     name: apache2
     state: reloaded
     enabled: yes
+
+- name: Reload apache2
+  command: apache2ctl configtest
+  notify: Reload apache2 - after check
+
+- name: Restart apache2
+  command: apache2ctl configtest
+  notify: Reload apache2 - after check
