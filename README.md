@@ -14,3 +14,7 @@ All variables under defaults are there to be overridden if needed.
 * apache2_conf_dir - conf-enabled directory on target
 * apache2_http_port: http port to use (opens this port on firewall)
 * apache2_https_port: https port to use (opens this port on firewall)
+
+## mandatory variables:
+* apache2_server_name: Server name
+* apache2_local_config_dir: Where local config files are stored
