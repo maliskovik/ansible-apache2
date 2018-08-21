@@ -35,6 +35,7 @@
   apache2_module:
     name: "{{ item }}"
     state: present
+    ignore_configcheck: True
   with_items: "{{ apache2_optional_modules|default(omit) }}"
   when: apache2_optional_modules is defined
   notify: Restart apache2
@@ -50,7 +51,7 @@
 - name: Aditional configs
   template:
     src: "{{ item }}"
-    dest: "{{ apache2_vhosts_dir }}"
+    dest: "/etc/apache2/conf-enabled"
   with_fileglob:
     - "{{ apache2_local_config_dir }}/conf-enabled/*.conf"
   notify: Reload apache2
