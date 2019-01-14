@@ -28,6 +28,7 @@
   apache2_module:
     name: "{{ item }}"
     state: present
+    ignore_configcheck: True
   with_items: "{{ apache2_base_modules|default(omit) }}"
   notify: Restart apache2
 
