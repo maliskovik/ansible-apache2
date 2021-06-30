@@ -45,6 +45,11 @@
   template:
     src: "{{ item }}"
     dest: "{{ apache2_vhosts_dir }}"
+    owner: root
+    group: root
+    mode: 0644
+    force: yes
+    backup: yes
   with_fileglob:
     - "{{ apache2_local_config_dir }}/sites-enabled/*.conf"
   notify: Reload apache2
