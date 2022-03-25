@@ -11,10 +11,10 @@ ServerSignature       Off
 ServerTokens          Prod
 
 # Connection config
-Timeout               300
+Timeout               600
 KeepAlive             On
-MaxKeepAliveRequests  100
-KeepAliveTimeout      5
+MaxKeepAliveRequests  300
+KeepAliveTimeout      60
 HostnameLookups       Off
 
 # Include module configuration:
