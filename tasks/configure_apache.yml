@@ -62,14 +62,78 @@
     - "{{ apache2_local_config_dir }}/conf-enabled/*.conf"
   notify: Reload apache2
 
-- name: Allow HTTP
+- name: Allow HTTP directly
   ufw:
     port: "{{ apache2_http_port }}"
     proto: tcp
+    from_ip: any
     rule: allow
+  when:
+    - apache2_http_open
+    - not apache2_http_proxy
 
-- name: Allow HTTPS
+- name: Allow HTTPS directly
   ufw:
     port: "{{ apache2_https_port }}"
     proto: tcp
+    from_ip: any
     rule: allow
+  when:
+    - apache2_https_open
+    - not apache2_https_proxy
+
+- name: Disallow HTTP directly
+  ufw:
+    port: "{{ apache2_http_port }}"
+    proto: tcp
+    from_ip: any
+    rule: allow
+    delete: yes
+  when: (not apache2_http_open) or apache2_http_proxy
+
+- name: Disallow HTTPS directly
+  ufw:
+    port: "{{ apache2_https_port }}"
+    proto: tcp
+    from_ip: any
+    rule: allow
+    delete: yes
+  when: (not apache2_https_open) or apache2_https_proxy
+
+- name: Allow HTTP from proxy
+  ufw:
+    port: "{{ apache2_http_port }}"
+    proto: tcp
+    from_ip: "{{ apache2_http_proxy_ip }}"
+    rule: allow
+  when:
+    - apache2_http_open
+    - apache2_http_proxy
+
+- name: Allow HTTPS from proxy
+  ufw:
+    port: "{{ apache2_https_port }}"
+    proto: tcp
+    from_ip: "{{ apache2_https_proxy_ip }}"
+    rule: allow
+  when:
+    - apache2_https_open
+    - apache2_https_proxy
+
+- name: Disallow HTTP from proxy
+  ufw:
+    port: "{{ apache2_http_port }}"
+    proto: tcp
+    from_ip: "{{ apache2_http_proxy_ip }}"
+    rule: allow
+    delete: yes
+  when: not apache2_http_proxy
+
+- name: Disallow HTTPS from proxy
+  ufw:
+    port: "{{ apache2_https_port }}"
+    proto: tcp
+    from_ip: "{{ apache2_https_proxy_ip }}"
+    rule: allow
+    delete: yes
+  when: not apache2_https_proxy
