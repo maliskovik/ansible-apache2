@@ -1,3 +1,5 @@
+---
+
 apache2_config_root: "/etc/apache2"
 apache2_main_config: "apache_main"
 apache2_vhosts_dir: "{{ apache2_config_root }}/sites-enabled"
