@@ -62,6 +62,14 @@
     - "{{ apache2_local_config_dir }}/conf-enabled/*.conf"
   notify: Reload apache2
 
+- name: Aditional available configs
+  template:
+    src: "{{ item }}"
+    dest: "/etc/apache2/conf-enabled"
+  with_fileglob:
+    - "{{ apache2_local_config_dir }}/conf-enabled/*.conf"
+  notify: Reload apache2
+
 - name: Allow HTTP directly
   ufw:
     port: "{{ apache2_http_port }}"
