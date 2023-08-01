@@ -29,6 +29,7 @@
     name: "{{ item }}"
     state: present
     ignore_configcheck: True
+    force: True
   with_items: "{{ apache2_base_modules|default(omit) }}"
   notify: Restart apache2
 
@@ -37,6 +38,7 @@
     name: "{{ item }}"
     state: present
     ignore_configcheck: True
+    force: True
   with_items: "{{ apache2_optional_modules|default(omit) }}"
   when: apache2_optional_modules is defined
   notify: Restart apache2
