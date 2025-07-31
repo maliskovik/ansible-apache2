@@ -1,4 +1,4 @@
 ---
 
-- include: install_apache.yml
-- include: configure_apache.yml
+- ansible.builtin.include_tasks: install_apache.yml
+- ansible.builtin.include_tasks: configure_apache.yml
